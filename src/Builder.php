@@ -68,9 +68,7 @@ class Builder
     {
         $payload = $this->getPayload();
 
-        $params = [
-            'body' => $payload,
-        ];
+        $params = $payload;
 
         if ($this->searchIndex) {
             $params['index'] = $this->searchIndex;
