@@ -2,7 +2,6 @@
 
 namespace Spatie\ElasticsearchQueryBuilder;
 
-use Elastic\Elasticsearch\Client;
 use Spatie\ElasticsearchQueryBuilder\Aggregations\Aggregation;
 use Spatie\ElasticsearchQueryBuilder\Queries\BoolQuery;
 use Spatie\ElasticsearchQueryBuilder\Queries\Query;
@@ -28,7 +27,7 @@ class Builder
 
     protected bool $withAggregations = true;
 
-    public function __construct(protected Client $client)
+    public function __construct()
     {
     }
 
@@ -63,29 +62,6 @@ class Builder
         $this->sorts->add($sort);
 
         return $this;
-    }
-
-    public function search(): array
-    {
-        $payload = $this->getPayload();
-
-        $params = [
-            'body' => $payload,
-        ];
-
-        if ($this->searchIndex) {
-            $params['index'] = $this->searchIndex;
-        }
-
-        if ($this->size !== null) {
-            $params['size'] = $this->size;
-        }
-
-        if ($this->from !== null) {
-            $params['from'] = $this->from;
-        }
-
-        return $this->client->search($params);
     }
 
     public function index(string $searchIndex): static
