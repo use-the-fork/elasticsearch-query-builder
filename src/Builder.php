@@ -64,6 +64,29 @@ class Builder
         return $this;
     }
 
+    public function search(): array
+    {
+        $payload = $this->getPayload();
+
+        $params = [
+            'body' => $payload,
+        ];
+
+        if ($this->searchIndex) {
+            $params['index'] = $this->searchIndex;
+        }
+
+        if ($this->size !== null) {
+            $params['size'] = $this->size;
+        }
+
+        if ($this->from !== null) {
+            $params['from'] = $this->from;
+        }
+
+        return $params;
+    }
+
     public function index(string $searchIndex): static
     {
         $this->searchIndex = $searchIndex;
